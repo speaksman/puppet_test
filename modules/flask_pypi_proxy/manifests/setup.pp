@@ -1,7 +1,4 @@
 class flask_pypi_proxy::setup { 
-  
-  # This class is designed to setup the flask pipy proxy service
-  # by installing all the necessary files and creating the necessary directories
 
   service { "apache2":
     ensure  => "running",
@@ -9,13 +6,14 @@ class flask_pypi_proxy::setup {
     require => Package["apache2"],
   }
 
-  # Ensure that directories get created
-
   file { [ "/tmp", "/tmp/test" ]:
     ensure => "directory",
   }
 
+
   file { "/etc/apache2/sites-enabled/flask_pypi_proxy.conf":
+    ensure => "directory",
+    recurse => "true",
     notify => Service["apache2"],
     mode   => 0440,
     owner  => root,
@@ -25,6 +23,8 @@ class flask_pypi_proxy::setup {
   }
 
   file { "/mnt/test/flask_pypi_proxy.wsgi":
+    ensure => "directory",
+    recurse => "true",
     notify => Service["apache2"],
     mode   => 0440,
     owner  => root,

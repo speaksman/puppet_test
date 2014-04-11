@@ -1,7 +1,5 @@
 class apache::install {
 
-     # install the apache binaries
-
      package { 'apache2':
        provider => 'apt',
        ensure   => 'installed',
